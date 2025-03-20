@@ -30,6 +30,16 @@ fabricShaking {
     shake()
 }
 
+configurations.all {
+    resolutionStrategy {
+        dependencySubstitution {
+            substitute(module("com.github.Draylar.omega-config:omega-config-base"))
+                .using(module("dev.draylar.omega-config:omega-config-base:1.4.0+1.20.1"))
+        }
+        force("dev.draylar.omega-config:omega-config-base:1.4.0+1.20.1")
+    }
+}
+
 repositories {
     mavenLocal()
     // location of the maven that hosts JEI files since January 2023
@@ -78,9 +88,6 @@ repositories {
     }
     maven {
         url = uri("https://maven.draylar.dev/releases")
-        content {
-            includeGroup("dev.draylar")
-        }
     }
     maven {
         name = "Jitpack for MI"
@@ -147,9 +154,25 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
     }
 
-    libs.bundles.externalMods.fabric.integrations.full.get().map { modCompileOnly(it) }
-    libs.bundles.externalMods.fabric.integrations.active.get().map { modRuntimeOnly(it) }
-    libs.bundles.externalMods.fabric.integrations.activedep.get().map { modRuntimeOnly(it) }
+    // Exclude the old dependency
+    modRuntimeOnly("dev.draylar:magna:1.10.1+1.20.1") {
+        exclude("com.github.Draylar.omega-config", "omega-config-base")
+    }
+    // Add the new dependency
+    modRuntimeOnly("dev.draylar.omega-config:omega-config-base:1.4.0+1.20.1")
+
+    modCompileOnly(libs.bundles.externalMods.fabric.integrations.full) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+    }
+    modRuntimeOnly(libs.bundles.externalMods.fabric.integrations.active) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+    }
+    modRuntimeOnly(libs.bundles.externalMods.fabric.integrations.activedep) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+    }
 }
 
 publishingShaking {

@@ -62,7 +62,6 @@ jsonem = "0.2.1+1.20"
 automobility-fabric = "0.4.2+1.20.1-fabric"
 create-fabric = "0.5.1-g-build.1483+mc1.20.1"
 modern-industrialization = "4721852" # Modern Industrialization v1.7.3
-magna = "1.10.1+1.20.1"
 pal = "1.8.0"
 
 # Integration mod dependencies (forge)
@@ -173,7 +172,6 @@ create-fabric = { module = "com.simibubi.create:create-fabric-1.20.1", version.r
 jsonem = {module = "maven.modrinth:jsonem", version.ref = "jsonem"}
 
 modern-industrialization = {module = "curse.maven:modernindust-405388", version.ref="modern-industrialization"}
-magna = {module = "dev.draylar:magna", version.ref="magna"}
 pal = {module = "io.github.ladysnake:PlayerAbilityLib", version.ref="pal"}
 
 # Forge integration dependencies
@@ -267,7 +265,6 @@ externalMods-fabric-integrations-full = [
     "create-fabric",
     "jsonem", # required by automobility
     "modern-industrialization",
-    "magna",  # required by MI
     "pal",  # required by MI,
 ]
 externalMods-fabric-integrations-active = [
@@ -283,7 +280,6 @@ externalMods-fabric-integrations-active = [
     "create-fabric",
     "jsonem", # required by automobility
     "modern-industrialization",
-    "magna",  # required by MI
     "pal",  # required by MI
 ]
 externalMods-fabric-integrations-activedep = [

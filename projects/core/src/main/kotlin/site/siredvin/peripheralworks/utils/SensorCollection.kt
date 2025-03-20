@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.broccolium.modules.platform.PlatformTags
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.owner.PocketPeripheralOwner
 
 object SensorCollection {
 
@@ -45,12 +46,19 @@ object SensorCollection {
         return MethodResult.of("stable")
     }
 
-    fun inspectOrientationAngle(owner: IPeripheralOwner): MethodResult = when (owner.facing) {
-        Direction.NORTH -> MethodResult.of(0)
-        Direction.SOUTH -> MethodResult.of(180)
-        Direction.WEST -> MethodResult.of(270)
-        Direction.EAST -> MethodResult.of(90)
-        else -> MethodResult.of(null, "Cannot determinate angle to north pole")
+    fun inspectOrientationAngle(owner: IPeripheralOwner): MethodResult {
+        // Return precise rotational angle from player rotation
+        val player = owner.owner
+        if (player == null || owner !is PocketPeripheralOwner) {
+            return when (owner.facing) {
+                Direction.NORTH -> MethodResult.of(180f, 0f)
+                Direction.SOUTH -> MethodResult.of(0f, 0f)
+                Direction.WEST -> MethodResult.of(90f, 0f)
+                Direction.EAST -> MethodResult.of(270f, 0f)
+                else -> MethodResult.of(null, "Cannot determinate angle to north pole")
+            }
+        }
+        return MethodResult.of(player.yRot, player.xRot)
     }
 
     fun inspectTime(owner: IPeripheralOwner): MethodResult {
