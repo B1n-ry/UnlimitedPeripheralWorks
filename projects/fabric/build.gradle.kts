@@ -185,7 +185,6 @@ modPublishing {
         listOf(
             "cc-tweaked",
             "fabric-language-kotlin",
-            "peripheralium",
         ),
     )
     requiredDependenciesCurseforge.add("forge-config-api-port-fabric")
